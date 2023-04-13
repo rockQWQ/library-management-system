@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="leftMenuFragment" class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <aside class="lyear-layout-sidebar">
+
+        <!-- logo -->
+        <div id="logo" class="sidebar-header">
+            <a href="index.html"><img src="../../images/logo-sidebar.png" title="LightYear" alt="LightYear"/></a>
+        </div>
+        <div class="lyear-layout-sidebar-scroll">
+
+            <nav class="sidebar-main">
+                <ul class="nav nav-drawer">
+                    <li class="nav-item active">
+                        <a href="/backgroundsystem/BorrowingServlet?method=query"><i class="mdi mdi-home"></i> 后台首页</a>
+                    </li>
+                    <li class="nav-item nav-item-has-subnav">
+                        <a href="javascript:void(0)"><i class="mdi mdi-palette"></i>查询书籍</i></a>
+                        <ul class="nav nav-subnav">
+                            <li><a href="Enquiry_of_borrowed_books.html">查询借阅书籍</a></li>
+                        </ul>
+                        <ul class="nav nav-subnav">
+                            <li><a href="/backgroundsystem/BookServlet?method=query">查询书籍库存</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item nav-item-has-subnav">
+                        <a href="javascript:void(0)"><i class="mdi mdi-format-align-justify"></i> 归还书籍</a>
+                        <ul class="nav nav-subnav">
+                            <li><a href="lyear_forms_elements.html"> 归还借阅书籍</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item nav-item-has-subnav">
+                        <a href="javascript:void(0)"><i class="mdi mdi-file-outline"></i> 添加书籍</a>
+                        <ul class="nav nav-subnav">
+                            <li><a th:href="@{/backgroundsystem/BookServlet(method=insertRequest)}">添加书籍</a>
+                            <li><a th:href="@{/backgroundsystem/BorrowingServlet(method=insertRequest)}">添加借书记录</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item nav-item-has-subnav">
+                        <a href="javascript:void(0)"><i class="mid mdi-account"></i> 分类管理</a>
+                        <ul class="nav nav-subnav">
+                            <li><a href="/backgroundsystem/CategoryServlet?method=query">查询所有分类</a></li>
+                            <li><a href="/backgroundsystem/CategoryServlet?method=insertRequest">添加分类</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+    </aside>
+</div>

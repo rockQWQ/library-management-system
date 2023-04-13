@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>借书记录</title>
+    <link rel="icon" href="../../favicon.ico" type="image/ico">
+    <meta name="author" content="yinqi">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="../../css/style.min.css" rel="stylesheet">
+
+
+</head>
+<body>
+<div class="lyear-layout-web">
+    <div class="lyear-layout-container">
+        <!--左侧导航-->
+        <div id="Mydiv" th:replace="~{common/leftmenu::leftMenuFragment}"></div>
+    </div>
+    <!--End 左侧导航-->
+    <!--头部信息-->
+    <div th:insert="~{common/topbar::topbarFragment}"></div>
+    <!--End 头部信息-->
+    <main class="lyear-layout-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="/backgroundsystem/BorrowingServlet" method="get" class="row">
+                            <div class="form-group col-md-12">
+                                <label for="categoryid">选择借阅图书</label>
+                                <div class="form-controls">
+                                    <select name="bookid" class="form-control js-datepicker m-b-10" id="categoryid">
+                                        <!--th:block 是一个属性容器，用于创建区域块（内容为空则不创建），之后th:block标签消失。-->
+                                        <th:block th:each="b:${bList}">
+                                            <option th:value="${b.id}" th:text="${b.name}"></option>
+                                        </th:block>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="startTime">开始时间</label>
+                                    <input class="form-control js-datepicker m-b-10" type="text" id="startTime"
+                                           name="startTime" placeholder="yyyy-mm-dd" value=""
+                                           data-date-format="yyyy-mm-dd"/>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="endTime">结束时间</label>
+                                    <input class="form-control js-datepicker m-b-10" type="text" id="endTime"
+                                           name="endTime" placeholder="yyyy-mm-dd" value=""
+                                           data-date-format="yyyy-mm-dd"/>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="username">借阅人</label>
+                                    <input type="text" class="form-control" id="username" name="username" value=""
+                                           placeholder="输入姓名"/>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <input type="hidden" name="method" value="insert">
+                                    <button type="submit" class="btn btn-primary ajax-post" target-form="add-form">提 交
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script src="../../js/bootstrap-datetimepicker/moment.min.js"></script>
+<script src="../../js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<script src="../../js/bootstrap-datetimepicker/locale/zh-cn.js"></script>
+<script src="../../js/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<script src="../../js/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<script type="text/javascript" src="../../js/main.min.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="../../js/main.min.js"></script>
+<script type="text/javascript" src="../../js/Chart.js"></script>
+<script type="text/javascript">
+
+    new Chart($dashChartBarsCnt, {
+        type: 'bar',
+        data: $dashChartBarsData
+    });
+
+    var myLineChart = new Chart($dashChartLinesCnt, {
+        type: 'line',
+        data: $dashChartLinesData,
+    });
+</script>
+
+<!--图表插件-->
+
+</body>
+</html>

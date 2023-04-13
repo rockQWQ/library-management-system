@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>书本列表</title>
+    <link rel="icon" href="../../favicon.ico" type="image/ico">
+    <meta name="author" content="yinqi">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="../../css/style.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="lyear-layout-web">
+    <div class="lyear-layout-container">
+        <!--左侧导航-->
+        <div id="Mydiv" th:replace="~{common/leftmenu::leftMenuFragment}"></div>
+    </div>
+    <!--End 左侧导航-->
+    <!--头部信息-->
+    <div th:insert="~{common/topbar::topbarFragment}"></div>
+    <!--End 头部信息-->
+
+    <!--页面主要内容-->
+    <main class="lyear-layout-content">
+        <div class="container-fluid">
+            <div class="row">
+            </div>
+            <div class="card-body">
+
+                <div class="table-responsive">
+                    <form action="/backgroundsystem/BookServlet" name="query" method="get">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>编号</th>
+                                <th>书本名称</th>
+                                <th>描述</th>
+                                <th>作者</th>
+                                <th>出版日期</th>
+                                <th>出版社</th>
+                                <th>分类名称</th>
+                                <th>库存</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <th:block th:if="${pageInfo!=null and pageInfo.date!=null}">
+                                <tr th:each="g:${pageInfo.date}">
+                                    <td th:text="${g.id}"></td>
+                                    <td th:text="${g.name}"></td>
+                                    <td th:text="${g.description}"></td>
+                                    <td th:text="${g.author}"></td>
+                                    <td th:text="${g.publis}"></td>
+                                    <td th:text="${g.category}"></td>
+                                    <td th:text="${g.categoryname}"></td>
+                                    <td th:text="${g.Inventory}"></td>
+                                    <td>
+                                        <a th:href="@{/backgroundsystem/BookServlet(method=delete,id=${g.id})}">链接删除</a>
+                                        <a th:href="@{/backgroundsystem/BookServlet(method=updateReqeust,id=${g.id})}">修改</a>
+                                    </td>
+                                </tr>
+                            </th:block>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="5" style="color: red" th:text="${info}"></td>
+                                <td colspan="5">
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination">
+                                            <li th:class="disabled"><a href="#">总记录:<span
+                                                    th:text="${pageInfo.totalRecord}"></span></a></li>
+                                            <li th:class="disabled"><a href="#">总页数:<span
+                                                    th:text="${pageInfo.pages}"></span></a></li>
+                                            <th:block th:if="${pageInfo.pageNum==0}">
+                                                <li class="disabled">
+                                                    <a href="#" aria-label="Previous">
+                                                        <span aria-hidden="true">&laquo;&laquo;</span>
+                                                    </a>
+                                                </li>
+                                            </th:block>
+                                            <th:block th:if="${pageInfo.pageNum>=pageInfo.pageSize}">
+                                                <li>
+                                                    <a th:href="@{/backgroundsystem/BookServlet(method=query,pageNum=0)}"
+                                                       aria-label="Previous">
+                                                        <span aria-hidden="true">&laquo;&laquo;</span>
+                                                    </a>
+                                                </li>
+                                            </th:block>
+                                            <th:block th:if="${pageInfo.pageNum==0}">
+                                                <li class="disabled">
+                                                    <a href="#" aria-label="Previous">
+                                                        <span aria-hidden="true">&laquo;</span>
+                                                    </a>
+                                                </li>
+                                            </th:block>
+                                            <th:block th:if="${pageInfo.pageNum>=pageInfo.pageSize}">
+                                                <li>
+                                                    <a th:href="@{/backgroundsystem/BookServlet(method=query,pageNum=${pageInfo.pageNum-5})}"
+                                                       aria-label="Previous">
+                                                        <span aria-hidden="true">&laquo;</span>
+                                                    </a>
+                                                </li>
+                                            </th:block>
+                                            <li><a href="#">1</a></li>
+                                            <li><a href="#">2</a></li>
+                                            <li><a href="#">3</a></li>
+                                            <li><a href="#">4</a></li>
+                                            <li><a href="#">5</a></li>
+                                            <th:block th:if="${pageInfo.pageNum+5>=pageInfo.totalRecord}">
+                                                <li class="disabled">
+                                                    <a href="#" aria-label="Next">
+                                                        <span aria-hidden="true">&raquo;</span>
+                                                    </a>
+                                                </li>
+                                            </th:block>
+                                            <th:block th:if="${pageInfo.pageNum<=pageInfo.pageSize}">
+                                                <li>
+                                                    <a th:href="@{/backgroundsystem/BookServlet(method=query,pageNum=${pageInfo.pageNum+5})}"
+                                                       aria-label="Next">
+                                                        <span aria-hidden="true">&raquo;</span>
+                                                    </a>
+                                                </li>
+                                            </th:block>
+                                            <th:block th:if="${pageInfo.pageNum+5>=pageInfo.totalRecord}">
+                                                <li class="disabled">
+                                                    <a href="#" aria-label="Next">
+                                                        <span aria-hidden="true">&raquo;&raquo;</span>
+                                                    </a>
+                                                </li>
+                                            </th:block>
+                                            <th:block th:if="${pageInfo.pageNum<=pageInfo.pageSize}">
+                                                <li>
+                                                    <a th:href="@{/backgroundsystem/BookServlet(method=query,pageNum=${pageInfo.totalRecord-5})}"
+                                                       aria-label="Next">
+                                                        <span aria-hidden="true">&raquo;&raquo;</span>
+                                                    </a>
+                                                </li>
+                                            </th:block>
+                                        </ul>
+                                    </nav>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <!--End 页面主要内容-->
+</div>
+</div>
+
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="../../js/main.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.search-bar .dropdown-menu a').click(function () {
+            var field = $(this).data('field') || '';
+            $('#search-field').val(field);
+            $('#search-btn').html($(this).text() + ' <span class="caret"></span>');
+        });
+    });
+</script>
+</body>
+</html>
